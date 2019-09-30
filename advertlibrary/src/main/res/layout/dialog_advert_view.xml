@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+    android:background="@drawable/rabbit"
+    >
 
     <ImageView
         android:id="@+id/iv_dialog_advert"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_launcher"
-        android:scaleType="fitXY"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="169dp"
+        android:layout_marginBottom="334dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher" />
+
     <ImageView
         android:id="@+id/iv_dialog_closed"
         android:layout_width="wrap_content"
@@ -18,5 +24,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/closead"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginBottom="244dp"
+        android:text="广告 dialog_advert_view"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -91,12 +91,14 @@ public class ShowWindowAdvertUtils {
         }
         if (advertType == AdvertConstant.INSERT_ADVERT_TYPE) {
             //params.width = WindowManager.LayoutParams.MATCH_PARENT;
-            params.width = 400;
-            params.height = 650;
+            params.width = 480;
+            params.height = 640;
+//            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             params.gravity = Gravity.CENTER;
         } else {
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
-            params.height = 150;
+            params.height = 640;
             params.gravity = bannerLocation == 1 ? Gravity.TOP : Gravity.BOTTOM;
         }
         if (windowManager != null && params != null) {

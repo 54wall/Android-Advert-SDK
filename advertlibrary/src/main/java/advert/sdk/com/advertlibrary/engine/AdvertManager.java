@@ -26,12 +26,12 @@ import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
  */
 
 public class AdvertManager {
+    private String TAG = AdvertManager.class.getSimpleName();
     private final Context context;
     private final List<AdvertBean> advertBeanList;
     int index;
     int indexMax;
     Handler handler = new Handler();
-    private String TAG = AdvertManager.class.getSimpleName();
     //每隔两分钟显示一个
     private int TIME = 10000;
     Runnable runnable = new Runnable() {
@@ -59,10 +59,12 @@ public class AdvertManager {
         Log.e(TAG, "广告类型 advertType:" + advertType);
         //根据广告类型来选择显示方式
         switch (advertType) {
+            //插入广告
             case AdvertConstant.INSERT_ADVERT_TYPE:
-                //插入广告
-            case AdvertConstant.BANNER_ADVERT_TYPE:
+                Log.e(TAG,"showAdvertManager 插入广告");
                 //横幅广告
+            case AdvertConstant.BANNER_ADVERT_TYPE:
+                Log.e(TAG,"showAdvertManager 横幅广告");
                 //这两种广告都采用dialog方式
                 //类型是TYPE_TOAST，像一个普通的Android Toast一样。这样就不需要申请悬浮窗权限了。
                 //初始化后不首先获得窗口焦点。不妨碍设备上其他部件的点击、触摸事件。
@@ -90,6 +92,7 @@ public class AdvertManager {
 
     //弹出通知栏显示广告
     private void showNotificationAlert(final AdvertBean advertBean) {
+        Log.e(TAG,"弹出通知栏显示广告 showNotificationAlert()");
         //将图片链接转换为bitmap对象
         DownloadUtils.getBitmapByPIcUrl(advertBean.getAdvertPicUrl(), new OnGetBitmapByurlListener() {
             @Override
