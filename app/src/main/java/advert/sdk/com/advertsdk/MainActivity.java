@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestPermissions(MainActivity.this);
-        //原文链接：https://blog.csdn.net/u014203484/article/details/78233980
+        //允许出现在其他应用上 https://blog.csdn.net/u014203484/article/details/78233980
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivityForResult(intent, 100);

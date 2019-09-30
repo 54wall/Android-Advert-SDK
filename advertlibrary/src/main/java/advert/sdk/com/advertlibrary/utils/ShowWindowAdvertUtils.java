@@ -82,12 +82,13 @@ public class ShowWindowAdvertUtils {
         advertTime = madvertTime;
         params = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_TOAST);
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        /* 需要适配android版本 Unable to add window -- token null is not valid; is your activity running?
+        https://blog.csdn.net/yanwenyuan0304/article/details/87868185*/
         if (Build.VERSION.SDK_INT > 25) {
             params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
             params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
-//        原文链接：https://blog.csdn.net/yanwenyuan0304/article/details/87868185
         if (advertType == AdvertConstant.INSERT_ADVERT_TYPE) {
             //params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.width = 400;
