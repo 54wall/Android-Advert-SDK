@@ -15,44 +15,47 @@ import advert.sdk.com.advertlibrary.utils.DownloadUtils;
 import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
 
 /**
+ *
  */
 
-public class AdvertService extends Service{
+public class AdvertService extends Service {
     //模拟apk
     public static String ADURLTEST1 = "http://112.74.135.95/xmxx/5001.apk";
     public static String ADURLTEST2 = "http://112.74.135.95/ttby/1001.apk";
     public static String ADURLTEST3 = "http://112.74.135.95/djddz/3001.apk";
+
     @Override
     public void onCreate() {
         //服务创建时,访问服务器显示什么样的广告
         //这里掉用访问服务器方法
         List<AdvertBean> advertTest = DownloadUtils.getAdvertTest();
         //将javabean传入广告管理者
-        new AdvertManager(advertTest,this);
+        new AdvertManager(advertTest, this);
         super.onCreate();
 
 
         /**
          * 程序到了后台 可以去移除当前界面
          */
-       new Thread(new Runnable() {
-           @Override
-           public void run() {
-               while (true){
-                   try {
-                       Thread.sleep(5000);// 线程暂停10秒，单位毫秒
-                       if (!isAppOnForeground()) {
-                           ShowWindowAdvertUtils.remove();
-                       }
-                   } catch (InterruptedException e) {
-                       // TODO Auto-generated catch block
-                       e.printStackTrace();
-                   }
-               }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(5000);// 线程暂停10秒，单位毫秒
+                        if (!isAppOnForeground()) {
+                            ShowWindowAdvertUtils.remove();
+                        }
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
 
-           }
-       }).start();
+            }
+        }).start();
     }
+
     /**
      * 程序是否在前台运行
      *

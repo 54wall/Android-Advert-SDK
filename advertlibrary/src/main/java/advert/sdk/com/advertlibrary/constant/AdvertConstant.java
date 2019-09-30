@@ -1,6 +1,7 @@
 package advert.sdk.com.advertlibrary.constant;
 
 /**
+ *
  */
 
 public interface AdvertConstant {

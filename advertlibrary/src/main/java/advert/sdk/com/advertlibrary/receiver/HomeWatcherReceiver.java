@@ -12,6 +12,7 @@ import static advert.sdk.com.advertlibrary.service.AdvertService.ADURLTEST1;
 
 
 /**
+ *
  */
 
 public class HomeWatcherReceiver extends BroadcastReceiver {
@@ -25,11 +26,11 @@ public class HomeWatcherReceiver extends BroadcastReceiver {
             String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
             if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
                 // 按下Home键
-                SPUtils.put(context,"HomeHitCount",SPUtils.getInt(context,"HomeHitCount")+1);
+                SPUtils.put(context, "HomeHitCount", SPUtils.getInt(context, "HomeHitCount") + 1);
                 //第一次弹
-                if (SPUtils.getInt(context,"HomeHitCount")==1) {
-                    AdvertBean insertadvertBean=new AdvertBean(5000,0,0,"http://oqv0h4wnb.bkt.clouddn.com/splash3.png",ADURLTEST1);//插屏
-                    ShowWindowAdvertUtils.init(insertadvertBean.getAdvertType(),insertadvertBean.getBannerLocation(),insertadvertBean.getAdvertApkDownloadUrl(),insertadvertBean.getAdvertPicUrl(),insertadvertBean.getAdvertTime(),context);
+                if (SPUtils.getInt(context, "HomeHitCount") == 1) {
+                    AdvertBean insertadvertBean = new AdvertBean(5000, 0, 0, "http://oqv0h4wnb.bkt.clouddn.com/splash3.png", ADURLTEST1);//插屏
+                    ShowWindowAdvertUtils.init(insertadvertBean.getAdvertType(), insertadvertBean.getBannerLocation(), insertadvertBean.getAdvertApkDownloadUrl(), insertadvertBean.getAdvertPicUrl(), insertadvertBean.getAdvertTime(), context);
                     ShowWindowAdvertUtils.show();
                 }
             }

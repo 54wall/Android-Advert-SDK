@@ -27,17 +27,17 @@ public class SupportMultipleScreensUtil {
     }
 
     public static void init(Context context) {
-        Resources resources=context.getResources();
+        Resources resources = context.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         int widthPixels = displayMetrics.widthPixels;
-        scale = (float)widthPixels / BASE_SCREEN_WIDTH_FLOAT;
+        scale = (float) widthPixels / BASE_SCREEN_WIDTH_FLOAT;
     }
 
 
     public static void scale(View view) {
-        if(null != view) {
-            if(view instanceof ViewGroup) {
-                scaleViewGroup((ViewGroup)view);
+        if (null != view) {
+            if (view instanceof ViewGroup) {
+                scaleViewGroup((ViewGroup) view);
             } else {
                 scaleView(view);
             }
@@ -57,7 +57,6 @@ public class SupportMultipleScreensUtil {
     }
 
 
-
     private static void scaleViewGroup(ViewGroup viewGroup) {
         for (int i = 0; i < viewGroup.getChildCount(); ++i) {
             View view = viewGroup.getChildAt(i);
@@ -69,8 +68,6 @@ public class SupportMultipleScreensUtil {
     }
 
 
-  
-    
     public static void scaleViewSize(View view) {
         if (null != view) {
             int paddingLeft = getScaleValue(view.getPaddingLeft());
@@ -108,19 +105,19 @@ public class SupportMultipleScreensUtil {
     }
 
     private static void setTextViewCompoundDrawables(TextView textView, Drawable leftDrawable, Drawable topDrawable, Drawable rightDrawable, Drawable bottomDrawable) {
-        if(null != leftDrawable) {
+        if (null != leftDrawable) {
             scaleDrawableBounds(leftDrawable);
         }
 
-        if(null != rightDrawable) {
+        if (null != rightDrawable) {
             scaleDrawableBounds(rightDrawable);
         }
 
-        if(null != topDrawable) {
+        if (null != topDrawable) {
             scaleDrawableBounds(topDrawable);
         }
 
-        if(null != bottomDrawable) {
+        if (null != bottomDrawable) {
             scaleDrawableBounds(bottomDrawable);
         }
 
@@ -128,8 +125,8 @@ public class SupportMultipleScreensUtil {
     }
 
     public static Drawable scaleDrawableBounds(Drawable drawable) {
-        int right=getScaleValue(drawable.getIntrinsicWidth());
-        int bottom=getScaleValue(drawable.getIntrinsicHeight());
+        int right = getScaleValue(drawable.getIntrinsicWidth());
+        int bottom = getScaleValue(drawable.getIntrinsicHeight());
         drawable.setBounds(0, 0, right, bottom);
         return drawable;
     }
@@ -158,7 +155,7 @@ public class SupportMultipleScreensUtil {
     }
 
     public static int getScaleValue(int value) {
-        return value <= 4?value:(int) Math.ceil((double)(scale * (float)value));
+        return value <= 4 ? value : (int) Math.ceil((double) (scale * (float) value));
     }
 
 }

@@ -8,6 +8,17 @@ import android.os.Parcelable;
  */
 
 public class AdvertBean implements Parcelable {
+    public static final Parcelable.Creator<AdvertBean> CREATOR = new Parcelable.Creator<AdvertBean>() {
+        @Override
+        public AdvertBean createFromParcel(Parcel source) {
+            return new AdvertBean(source);
+        }
+
+        @Override
+        public AdvertBean[] newArray(int size) {
+            return new AdvertBean[size];
+        }
+    };
     //广告显示时间,毫秒
     private int advertTime;
     //广告类型,0=插屏,1=横幅,2=通知栏
@@ -29,6 +40,14 @@ public class AdvertBean implements Parcelable {
         this.bannerLocation = bannerLocation;
         this.advertPicUrl = advertPicUrl;
         this.advertApkDownloadUrl = advertApkDownloadUrl;
+    }
+
+    protected AdvertBean(Parcel in) {
+        this.advertTime = in.readInt();
+        this.advertType = in.readInt();
+        this.bannerLocation = in.readInt();
+        this.advertPicUrl = in.readString();
+        this.advertApkDownloadUrl = in.readString();
     }
 
     public int getAdvertTime() {
@@ -84,26 +103,6 @@ public class AdvertBean implements Parcelable {
         dest.writeString(this.advertPicUrl);
         dest.writeString(this.advertApkDownloadUrl);
     }
-
-    protected AdvertBean(Parcel in) {
-        this.advertTime = in.readInt();
-        this.advertType = in.readInt();
-        this.bannerLocation = in.readInt();
-        this.advertPicUrl = in.readString();
-        this.advertApkDownloadUrl = in.readString();
-    }
-
-    public static final Parcelable.Creator<AdvertBean> CREATOR = new Parcelable.Creator<AdvertBean>() {
-        @Override
-        public AdvertBean createFromParcel(Parcel source) {
-            return new AdvertBean(source);
-        }
-
-        @Override
-        public AdvertBean[] newArray(int size) {
-            return new AdvertBean[size];
-        }
-    };
 
     @Override
     public String toString() {

@@ -17,11 +17,12 @@ import advert.sdk.com.advertlibrary.intf.ProgressResponseListener;
 public class ProgressHelper {
     /**
      * 包装OkHttpClient，用于下载文件的回调
-     * @param client 待包装的OkHttpClient
+     *
+     * @param client           待包装的OkHttpClient
      * @param progressListener 进度回调接口
      * @return 包装后的OkHttpClient，使用clone方法返回
      */
-    public static OkHttpClient addProgressResponseListener(OkHttpClient client,final ProgressResponseListener progressListener){
+    public static OkHttpClient addProgressResponseListener(OkHttpClient client, final ProgressResponseListener progressListener) {
         //克隆
         OkHttpClient clone = client.clone();
         //增加拦截器

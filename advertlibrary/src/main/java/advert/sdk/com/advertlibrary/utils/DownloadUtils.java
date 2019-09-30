@@ -42,9 +42,16 @@ import static advert.sdk.com.advertlibrary.service.AdvertService.ADURLTEST3;
 import static android.app.Notification.FLAG_AUTO_CANCEL;
 
 /**
+ *
  */
 
 public class DownloadUtils {
+    private static final int DOWNLOAD_SUCCESS = 0;
+    private static final int DOWNLOAD_FAILED = 1;
+    static Notification.Builder notifivationbuilder;
+    static NotificationManager manager;
+    static Notification notification;
+
     /**
      * 模拟访问服务器数据的延迟
      *
@@ -53,17 +60,14 @@ public class DownloadUtils {
     public static List<AdvertBean> getAdvertTest() {
         //假定已经访问了服务器了,返回AdvertBean
         AdvertBean banneradvertBean1 = new AdvertBean(3000, 1, 1, "http://oqv0h4wnb.bkt.clouddn.com/splash1.png", ADURLTEST1);//顶部
-        AdvertBean banneradvertBean2=new AdvertBean(4000,2,0,"https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage1.png",ADURLTEST2);//底部
-        AdvertBean insertadvertBean=new AdvertBean(5000,0,0,"http://oqv0h4wnb.bkt.clouddn.com/splash3.png",ADURLTEST3);//插屏
-        List<AdvertBean>advertBeanList=new ArrayList<>();
+        AdvertBean banneradvertBean2 = new AdvertBean(4000, 2, 0, "https://raw.githubusercontent.com/yipianfengye/android-adDialog/master/images/testImage1.png", ADURLTEST2);//底部
+        AdvertBean insertadvertBean = new AdvertBean(5000, 0, 0, "http://oqv0h4wnb.bkt.clouddn.com/splash3.png", ADURLTEST3);//插屏
+        List<AdvertBean> advertBeanList = new ArrayList<>();
         advertBeanList.add(banneradvertBean1);
         advertBeanList.add(banneradvertBean2);
         advertBeanList.add(insertadvertBean);
         return advertBeanList;
     }
-
-    private static final int DOWNLOAD_SUCCESS = 0;
-    private static final int DOWNLOAD_FAILED = 1;
 
     public static void getBitmapByPIcUrl(final String url, final OnGetBitmapByurlListener onGetBitmapByurlListener) {
         final Handler handler = new Handler() {
@@ -269,10 +273,6 @@ public class DownloadUtils {
             throw new RuntimeException(e);
         }
     }
-
-    static Notification.Builder notifivationbuilder;
-    static NotificationManager manager;
-    static Notification notification;
 
     public static void showProgressnotifivation(Context context, int ratio) {
         if (notifivationbuilder == null) {

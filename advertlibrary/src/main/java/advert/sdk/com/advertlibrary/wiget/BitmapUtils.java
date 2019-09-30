@@ -23,14 +23,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * BitmapUtils工具类
  */
 
 public class BitmapUtils {
 
-    private final static String TAG = BitmapUtils.class.getCanonicalName();
     public final static String JPG_SUFFIX = ".jpg";
+    private final static String TAG = BitmapUtils.class.getCanonicalName();
     private final static String TIME_FORMAT = "yyyyMMddHHmmss";
 
     /**

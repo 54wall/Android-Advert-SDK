@@ -15,6 +15,7 @@ import advert.sdk.com.advertlibrary.utils.DownloadUtils;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
+ *
  */
 
 public class NotificationAdvertReceiver extends BroadcastReceiver {
@@ -40,7 +41,7 @@ public class NotificationAdvertReceiver extends BroadcastReceiver {
                     //长度未知的情况下回返回-1
                     long ratio = (100 * bytesRead) / contentLength;
                     if (ratio % 5 == 0) {
-                        DownloadUtils.showProgressnotifivation(context,(int) ratio);
+                        DownloadUtils.showProgressnotifivation(context, (int) ratio);
                     }
                 }
             }

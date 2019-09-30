@@ -6,18 +6,27 @@ import android.widget.Toast;
 
 
 /**
+ *
  */
 public class ToastUtil {
 
     static ToastUtil td;
+    Context context;
+    Toast toast;
+    String msg;
+
+
+    public ToastUtil(Context context) {
+        this.context = context;
+    }
 
     public static void show(int resId) {
-       // show(App.getInstance().getString(resId));
+        // show(App.getInstance().getString(resId));
     }
 
     public static void show(String msg) {
         if (td == null) {
-         //   td = new ToastUtil(App.getInstance());
+            //   td = new ToastUtil(App.getInstance());
         }
         td.setText(msg);
         td.create().show();
@@ -25,26 +34,17 @@ public class ToastUtil {
 
     public static void shortShow(String msg) {
         if (td == null) {
-           // td = new ToastUtil(App.getInstance());
+            // td = new ToastUtil(App.getInstance());
         }
         td.setText(msg);
         td.createShort().show();
-    }
-
-
-    Context context;
-    Toast toast;
-    String msg;
-
-    public ToastUtil(Context context) {
-        this.context = context;
     }
 
     public Toast create() {
       /*  View contentView = View.inflate(context, R.layout.dialog_toast, null);
         TextView tvMsg = (TextView) contentView.findViewById(R.id.tv_toast_msg);*/
         toast = new Toast(context);
-      //  toast.setView(contentView);
+        //  toast.setView(contentView);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_LONG);
         //tvMsg.setText(msg);
@@ -55,10 +55,10 @@ public class ToastUtil {
        /* View contentView = View.inflate(context, R.layout.dialog_toast, null);
         TextView tvMsg = (TextView) contentView.findViewById(R.id.tv_toast_msg);*/
         toast = new Toast(context);
-      //  toast.setView(contentView);
+        //  toast.setView(contentView);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-       // tvMsg.setText(msg);
+        // tvMsg.setText(msg);
         return toast;
     }
 

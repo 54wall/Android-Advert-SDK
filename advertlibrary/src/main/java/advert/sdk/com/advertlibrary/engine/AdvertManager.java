@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import advert.sdk.com.advertlibrary.utils.DownloadUtils;
 import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
 
 /**
+ *
  */
 
 public class AdvertManager {
@@ -28,18 +30,10 @@ public class AdvertManager {
     private final List<AdvertBean> advertBeanList;
     int index;
     int indexMax;
-
-    public AdvertManager(List<AdvertBean> advertBeanList, Context context) {
-        this.context = context;
-        this.advertBeanList = advertBeanList;
-        handler.postDelayed(runnable, TIME);
-        index = 0;
-        indexMax=advertBeanList==null?0:advertBeanList.size();
-    }
-
+    Handler handler = new Handler();
+    private String TAG = AdvertManager.class.getSimpleName();
     //每隔两分钟显示一个
     private int TIME = 10000;
-    Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -52,10 +46,17 @@ public class AdvertManager {
             handler.postDelayed(this, TIME);
         }
     };
-
+    public AdvertManager(List<AdvertBean> advertBeanList, Context context) {
+        this.context = context;
+        this.advertBeanList = advertBeanList;
+        handler.postDelayed(runnable, TIME);
+        index = 0;
+        indexMax = advertBeanList == null ? 0 : advertBeanList.size();
+    }
 
     private void showAdvertManager(final AdvertBean advertBean) {
         int advertType = advertBean.getAdvertType();
+        Log.e(TAG, "广告类型 advertType:" + advertType);
         //根据广告类型来选择显示方式
         switch (advertType) {
             case AdvertConstant.INSERT_ADVERT_TYPE:

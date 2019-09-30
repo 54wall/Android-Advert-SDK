@@ -43,7 +43,6 @@ public abstract class Animator implements Cloneable {
      * this is not the case). Also, if the animation will animate
      * properties of objects in the view hierarchy, then the calling thread should be the UI
      * thread for that view hierarchy.</p>
-     *
      */
     public void start() {
     }
@@ -82,18 +81,10 @@ public abstract class Animator implements Cloneable {
     /**
      * The amount of time, in milliseconds, to delay starting the animation after
      * {@link #start()} is called.
-
+     *
      * @param startDelay The amount of the delay, in milliseconds
      */
     public abstract void setStartDelay(long startDelay);
-
-
-    /**
-     * Sets the length of the animation.
-     *
-     * @param duration The length of the animation, in milliseconds.
-     */
-    public abstract Animator setDuration(long duration);
 
     /**
      * Gets the length of the animation.
@@ -101,6 +92,13 @@ public abstract class Animator implements Cloneable {
      * @return The length of the animation, in milliseconds.
      */
     public abstract long getDuration();
+
+    /**
+     * Sets the length of the animation.
+     *
+     * @param duration The length of the animation, in milliseconds.
+     */
+    public abstract Animator setDuration(long duration);
 
     /**
      * The time interpolator used in calculating the elapsed fraction of this animation. The
@@ -200,7 +198,7 @@ public abstract class Animator implements Cloneable {
             }
             return anim;
         } catch (CloneNotSupportedException e) {
-           throw new AssertionError();
+            throw new AssertionError();
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package advert.sdk.com.advertlibrary.wiget;
 
@@ -25,7 +25,20 @@ public class TimeUtil {
     public static final long ONE_HOUR_MILLISECONDS = 1000 * 3600;
 
     public static final long ONE_MIN_MILLISECONDS = 1000 * 60;
-
+    private final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
+        @SuppressLint("SimpleDateFormat")
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+    };
+    @SuppressLint("SimpleDateFormat")
+    private final static ThreadLocal<SimpleDateFormat> dateFormater2 = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd");
+        }
+    };
     /**
      * 时间日期格式化到年月日时分秒.
      */
@@ -37,12 +50,10 @@ public class TimeUtil {
      * 时间日期格式化到年月日.
      */
     public static String dateFormatYMD = "yyyy-MM-dd";
-
     /**
      * 时间日期格式化到年月日时分.中文显示
      */
     public static String dateFormatYMDHMofChinese = "yyyy年MM月dd日 HH:mm";
-
     /**
      * 时间日期格式化到年月日.中文显示
      */
@@ -59,61 +70,38 @@ public class TimeUtil {
      * 时间日期格式化到年月.
      */
     public static String dateFormatYM = "yyyy-MM";
-
     /**
      * 时间日期格式化到年月日时分.
      */
     public static String dateFormatYMDHM = "yyyy-MM-dd HH:mm";
-
     /**
      * 时间日期格式化到月日.
      */
     public static String dateFormatMD = "MM/dd";
     public static String dateFormatM_D = "MM-dd";
-
     public static String dateFormatM = "MM月";
     public static String dateFormatD = "dd";
     public static String dateFormatM2 = "MM";
-
     public static String dateFormatMDHMofChinese = "MM月dd日HH时mm分";
     public static String dateFormatHMofChinese = "HH时mm分";
-
     /**
      * 时分秒.
      */
     public static String dateFormatHMS = "HH:mm:ss";
-
     /**
      * 时分.
      */
     public static String dateFormatHM = "HH:mm";
-
     /**
      * 上午/下午时分
      */
     public static String dateFormatAHM = "aHH:mm";
-
     public static String dateFormatYMDE = "yyyy/MM/dd E";
     public static String dateFormatYMD2 = "yyyy/MM/dd";
 
-    private final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
-        @SuppressLint("SimpleDateFormat")
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }
-    };
-
-    @SuppressLint("SimpleDateFormat")
-    private final static ThreadLocal<SimpleDateFormat> dateFormater2 = new ThreadLocal<SimpleDateFormat>() {
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd");
-        }
-    };
-
     /**
      * 时间戳转特定格式时间
+     *
      * @param dataFormat
      * @param timeStamp
      * @return
@@ -155,25 +143,6 @@ public class TimeUtil {
             e.printStackTrace();
         }
         return date;
-    }
-
-    /**
-     * 描述：获取偏移之后的Date.
-     *
-     * @param date          日期时间
-     * @param calendarField Calendar属性，对应offset的值， 如(Calendar.DATE,表示+offset天,Calendar.HOUR_OF_DAY,表示＋offset小时)
-     * @param offset        偏移(值大于0,表示+,值小于0,表示－)
-     * @return Date 偏移之后的日期时间
-     */
-    public Date getDateByOffset(Date date, int calendarField, int offset) {
-        Calendar c = new GregorianCalendar();
-        try {
-            c.setTime(date);
-            c.add(calendarField, offset);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return c.getTime();
     }
 
     /**
@@ -312,7 +281,6 @@ public class TimeUtil {
 
     }
 
-
     //获取当前系统当天日期
     public static String getCurrentDay() {
         String curDateTime = null;
@@ -354,6 +322,7 @@ public class TimeUtil {
         }
         return curDateTime;
     }
+
     //获取当前系统前后第几小时
     public static String getNextHour(int i) {
         String curDateTime = null;
@@ -551,7 +520,6 @@ public class TimeUtil {
         return strDate;
     }
 
-
     /**
      * 描述：获取表示当前日期的0点时间毫秒数.
      *
@@ -654,7 +622,6 @@ public class TimeUtil {
 
         return strDate;
     }
-
 
     /**
      * 取指定日期为星期几
@@ -803,6 +770,7 @@ public class TimeUtil {
 
     /**
      * 过了多少个小时
+     *
      * @param dateStr
      * @return
      */
@@ -814,22 +782,21 @@ public class TimeUtil {
         try {
             sendDate = sdf.parse(dateStr);
             Date dateNow = new Date(System.currentTimeMillis());
-            Log.e("JPush","date="+sendDate);
+            Log.e("JPush", "date=" + sendDate);
             long times = dateNow.getTime() - sendDate.getTime();
-            Log.e("JPush","date.getTime()="+sendDate.getTime());
+            Log.e("JPush", "date.getTime()=" + sendDate.getTime());
             if (times > 0) {
                 ret = ((int) (times / ONE_HOUR_MILLISECONDS));
-                int sdqf =(int) Math.floor(times /ONE_HOUR_MILLISECONDS);
+                int sdqf = (int) Math.floor(times / ONE_HOUR_MILLISECONDS);
             } else {
                 ret = -1;
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.e("JPush","ret="+ret);
+        Log.e("JPush", "ret=" + ret);
         return ret;
     }
-
 
     /**
      * 判断给定字符串时间是否为今日
@@ -944,6 +911,7 @@ public class TimeUtil {
         tmpDuration %= 1;
         return str;
     }
+
     /**
      * 友好的时间间隔2
      *
@@ -953,9 +921,9 @@ public class TimeUtil {
     public static String getFriendlyDuration2(long duration) {
         String str = "";
         long tmpDuration = duration;
-        str += (tmpDuration / 60>0?tmpDuration / 60+"'":"");
+        str += (tmpDuration / 60 > 0 ? tmpDuration / 60 + "'" : "");
         tmpDuration %= 60;
-        str += (tmpDuration / 1>=10?tmpDuration / 1+"''":"0"+tmpDuration / 1+"''");
+        str += (tmpDuration / 1 >= 10 ? tmpDuration / 1 + "''" : "0" + tmpDuration / 1 + "''");
         tmpDuration %= 1;
         return str;
     }
@@ -975,7 +943,7 @@ public class TimeUtil {
     /**
      * 获取指定时间的毫秒值
      */
-    public static long getDatelongMills(String fomat, String dateStr){
+    public static long getDatelongMills(String fomat, String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat(fomat);
         Date date = null;
         try {
@@ -989,6 +957,7 @@ public class TimeUtil {
 
     /**
      * 两个日期比较
+     *
      * @param DATE1
      * @param DATE2
      * @return
@@ -998,7 +967,7 @@ public class TimeUtil {
         try {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);
-            if (dt1.getTime() - dt2.getTime()>0) {//date1>date2
+            if (dt1.getTime() - dt2.getTime() > 0) {//date1>date2
                 return 1;
             } else {
                 return -1;
@@ -1007,5 +976,24 @@ public class TimeUtil {
             exception.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * 描述：获取偏移之后的Date.
+     *
+     * @param date          日期时间
+     * @param calendarField Calendar属性，对应offset的值， 如(Calendar.DATE,表示+offset天,Calendar.HOUR_OF_DAY,表示＋offset小时)
+     * @param offset        偏移(值大于0,表示+,值小于0,表示－)
+     * @return Date 偏移之后的日期时间
+     */
+    public Date getDateByOffset(Date date, int calendarField, int offset) {
+        Calendar c = new GregorianCalendar();
+        try {
+            c.setTime(date);
+            c.add(calendarField, offset);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return c.getTime();
     }
 }
