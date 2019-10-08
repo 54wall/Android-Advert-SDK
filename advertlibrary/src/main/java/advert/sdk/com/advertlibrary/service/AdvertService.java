@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
  */
 
 public class AdvertService extends Service {
+
+    private String TAG = AdvertService.class.getSimpleName();
     //模拟apk
     public static String ADURLTEST1 = "http://112.74.135.95/xmxx/5001.apk";
     public static String ADURLTEST2 = "http://112.74.135.95/ttby/1001.apk";
@@ -62,6 +65,7 @@ public class AdvertService extends Service {
      * @return
      */
     public boolean isAppOnForeground() {
+        Log.e(TAG,"isAppOnForeground 程序是否在前台运行");
         ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         String packageName = getApplicationContext().getPackageName();
 

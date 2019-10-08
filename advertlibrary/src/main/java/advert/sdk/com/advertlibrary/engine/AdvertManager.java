@@ -78,6 +78,7 @@ public class AdvertManager {
                 }, advertBean.getAdvertTime());*/
                 break;
             case AdvertConstant.BAR_ADVERT_TYPE:
+                Log.e(TAG,"标题栏广告");
                 //标题栏广告,采用notification
                 new Handler().postDelayed(new Runnable() {
                     @Override

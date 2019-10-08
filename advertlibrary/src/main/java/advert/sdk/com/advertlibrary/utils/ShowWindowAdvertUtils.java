@@ -90,6 +90,7 @@ public class ShowWindowAdvertUtils {
             params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
         if (advertType == AdvertConstant.INSERT_ADVERT_TYPE) {
+            Log.e(TAG,"advertType == AdvertConstant.INSERT_ADVERT_TYPE 插屏广告");
             //params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.width = 480;
             params.height = 640;
@@ -97,6 +98,7 @@ public class ShowWindowAdvertUtils {
 //            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             params.gravity = Gravity.CENTER;
         } else {
+            Log.e(TAG,"非插屏广告");
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.height = 640;
             params.gravity = bannerLocation == 1 ? Gravity.TOP : Gravity.BOTTOM;
@@ -116,9 +118,9 @@ public class ShowWindowAdvertUtils {
      * 显示广告 传入视图 和布局参数
      */
     public static void show() {
-        Log.e(TAG, "show() 展示广告 1");
+        Log.e(TAG, "show() 展示广告");
         windowManager.addView(advertView, params);
-        Log.e(TAG, "show() 展示广告 2");
+
         //定时关闭
       /*  Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
@@ -133,6 +135,7 @@ public class ShowWindowAdvertUtils {
      * 关闭当前视图
      */
     public static void remove() {
+        Log.e(TAG, "remove() 关闭当前视图");
         try {
             windowManager.removeView(advertView);
         } catch (Exception e) {
@@ -142,6 +145,7 @@ public class ShowWindowAdvertUtils {
 
     // 安装方法
     public static void installApk(File destFile, Context context) {
+
         Intent intent = new Intent();
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
