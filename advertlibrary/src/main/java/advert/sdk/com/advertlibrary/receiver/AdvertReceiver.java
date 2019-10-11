@@ -17,7 +17,6 @@ public class AdvertReceiver extends BroadcastReceiver {
         boolean isServiceRunning = false;
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
             //检查Service状态
-            //检查Service状态
             ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             //当前服务
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

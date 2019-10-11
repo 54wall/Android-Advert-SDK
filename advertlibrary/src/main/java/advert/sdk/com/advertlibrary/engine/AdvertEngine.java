@@ -1,8 +1,10 @@
 package advert.sdk.com.advertlibrary.engine;
 
+import android.app.Presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.display.DisplayManager;
 import android.util.Log;
 
 import advert.sdk.com.advertlibrary.receiver.AdvertReceiver;
@@ -18,6 +20,8 @@ public class AdvertEngine {
 
     private static String TAG = AdvertEngine.class.getSimpleName();
 
+    protected DisplayManager mDisplayManager;   //使用DisplayManagerAPI可以获得当前连接的所有显示屏的枚举
+    protected Presentation mPresentationMain;
     /**
      * 初始化广告程序,在程序启动时候调用
      *
@@ -42,6 +46,9 @@ public class AdvertEngine {
             }
         }, 10000);*/
         SPUtils.put(context, "HomeHitCount", 0);
+
+
+
     }
 
     /**
@@ -56,6 +63,8 @@ public class AdvertEngine {
         context.unregisterReceiver(adverBroadCast);
         context.unregisterReceiver(new HomeWatcherReceiver());
     }
+
+
 
 
 }

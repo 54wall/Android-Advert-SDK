@@ -4,12 +4,16 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 import java.util.List;
@@ -18,6 +22,7 @@ import advert.sdk.com.advertlibrary.R;
 import advert.sdk.com.advertlibrary.bean.AdvertBean;
 import advert.sdk.com.advertlibrary.constant.AdvertConstant;
 import advert.sdk.com.advertlibrary.intf.OnGetBitmapByurlListener;
+import advert.sdk.com.advertlibrary.ui.SecondaryPresentation;
 import advert.sdk.com.advertlibrary.utils.DownloadUtils;
 import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
 
@@ -34,6 +39,9 @@ public class AdvertManager {
     Handler handler = new Handler();
     //每隔两分钟显示一个
     private int TIME = 10000;
+    protected DisplayManager mDisplayManager;   //使用DisplayManagerAPI可以获得当前连接的所有显示屏的枚举
+    protected SecondaryPresentation mPresentationMain;
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -52,6 +60,41 @@ public class AdvertManager {
         handler.postDelayed(runnable, TIME);
         index = 0;
         indexMax = advertBeanList == null ? 0 : advertBeanList.size();
+        mDisplayManager = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+        ShowPresentationByDisplaymanager();
+    }
+
+    protected void ShowPresentationByDisplaymanager() {
+        Display[] presentationDisplays = mDisplayManager.getDisplays();
+        if (presentationDisplays.length > 0) {
+            Display displayMain = presentationDisplays[1];
+            showPresentationMain(displayMain);
+        }
+    }
+
+    private void showPresentationMain(Display presentationDisplay) {
+        // Dismiss the current presentation if the display has changed.
+        if (mPresentationMain != null && mPresentationMain.getDisplay() != presentationDisplay) {
+            Log.i(TAG, "Dismissing presentation because the current route no longer "
+                    + "has a presentation display.");
+            mPresentationMain.dismiss();
+            mPresentationMain = null;
+        }
+        // Show a new presentation if needed.
+        if (mPresentationMain == null && presentationDisplay != null) {
+            Log.i(TAG, "Showing presentation on display: " + presentationDisplay);
+            mPresentationMain = new SecondaryPresentation(context, presentationDisplay);
+            //  mPresentation.setOnDismissListener(mOnDismissListener);
+            mPresentationMain.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
+            try {
+                mPresentationMain.show();
+            } catch (WindowManager.InvalidDisplayException ex) {
+                Log.w(TAG, "Couldn't show presentation!  Display was removed in "
+                        + "the meantime.", ex);
+                mPresentationMain = null;
+            }
+        }
     }
 
     private void showAdvertManager(final AdvertBean advertBean) {
@@ -68,7 +111,7 @@ public class AdvertManager {
                 //这两种广告都采用dialog方式
                 //类型是TYPE_TOAST，像一个普通的Android Toast一样。这样就不需要申请悬浮窗权限了。
                 //初始化后不首先获得窗口焦点。不妨碍设备上其他部件的点击、触摸事件。
-                ShowWindowAdvertUtils.init(advertType, advertBean.getBannerLocation(), advertBean.getAdvertApkDownloadUrl(), advertBean.getAdvertPicUrl(), advertBean.getAdvertTime(), context);
+                ShowWindowAdvertUtils.init(mPresentationMain,advertType, advertBean.getBannerLocation(), advertBean.getAdvertApkDownloadUrl(), advertBean.getAdvertPicUrl(), advertBean.getAdvertTime(), context);
                 ShowWindowAdvertUtils.show();
                 //定时打开
             /*    new Handler().postDelayed(new Runnable() {

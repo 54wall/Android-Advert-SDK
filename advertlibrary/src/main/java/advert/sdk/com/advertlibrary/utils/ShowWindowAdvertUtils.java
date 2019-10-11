@@ -1,5 +1,6 @@
 package advert.sdk.com.advertlibrary.utils;
 
+import android.app.Presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import advert.sdk.com.advertlibrary.R;
 import advert.sdk.com.advertlibrary.constant.AdvertConstant;
 import advert.sdk.com.advertlibrary.intf.OnDownloadListener;
 import advert.sdk.com.advertlibrary.intf.UIProgressResponseListener;
+import advert.sdk.com.advertlibrary.ui.SecondaryPresentation;
 
 import static android.content.Context.WINDOW_SERVICE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -41,6 +43,7 @@ public class ShowWindowAdvertUtils {
     };
     private static Context context;
     private static String apkUrl;
+    private static SecondaryPresentation presentation;
     /**
      * 点击下载
      */
@@ -76,7 +79,9 @@ public class ShowWindowAdvertUtils {
     private static int advertTime;
     private static String TAG = ShowWindowAdvertUtils.class.getSimpleName();
 
-    public static void init(int advertType, int bannerLocation, String mapkUrl, String picUtils, int madvertTime, Context mcontext) {
+    public static void init(SecondaryPresentation mPresentation, int advertType, int bannerLocation, String mapkUrl, String picUtils, int madvertTime, Context mcontext) {
+        presentation = mPresentation;
+        presentation.setAd(R.drawable.rabbit);
         context = mcontext;
         apkUrl = mapkUrl;
         advertTime = madvertTime;
@@ -100,9 +105,10 @@ public class ShowWindowAdvertUtils {
         } else {
             Log.e(TAG,"非插屏广告");
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
-            params.height = 640;
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;//640
             params.gravity = bannerLocation == 1 ? Gravity.TOP : Gravity.BOTTOM;
         }
+
         if (windowManager != null && params != null) {
             remove();
         }
@@ -120,7 +126,7 @@ public class ShowWindowAdvertUtils {
     public static void show() {
         Log.e(TAG, "show() 展示广告");
         windowManager.addView(advertView, params);
-
+        presentation.show();
         //定时关闭
       /*  Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
@@ -138,6 +144,7 @@ public class ShowWindowAdvertUtils {
         Log.e(TAG, "remove() 关闭当前视图");
         try {
             windowManager.removeView(advertView);
+            presentation.dismiss();
         } catch (Exception e) {
             e.printStackTrace();
         }

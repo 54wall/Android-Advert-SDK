@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestPermissions(MainActivity.this);
         //允许出现在其他应用上 https://blog.csdn.net/u014203484/article/details/78233980
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, 100);
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+//        intent.setData(Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, 100);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn)
                 .setOnClickListener(new View.OnClickListener() {

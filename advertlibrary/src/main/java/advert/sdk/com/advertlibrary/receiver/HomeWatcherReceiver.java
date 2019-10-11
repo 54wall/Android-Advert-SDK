@@ -35,8 +35,8 @@ public class HomeWatcherReceiver extends BroadcastReceiver {
                 if (SPUtils.getInt(context, "HomeHitCount") == 1) {
                     Log.e(TAG,"第一次弹");
                     AdvertBean insertadvertBean = new AdvertBean(5000, 0, 0, "https://pic4.zhimg.com//v2-67d349d4c879effe311f5401e0bdc347.jpg", ADURLTEST1);//插屏
-                    ShowWindowAdvertUtils.init(insertadvertBean.getAdvertType(), insertadvertBean.getBannerLocation(), insertadvertBean.getAdvertApkDownloadUrl(), insertadvertBean.getAdvertPicUrl(), insertadvertBean.getAdvertTime(), context);
-                    ShowWindowAdvertUtils.show();
+//                    ShowWindowAdvertUtils.init(insertadvertBean.getAdvertType(), insertadvertBean.getBannerLocation(), insertadvertBean.getAdvertApkDownloadUrl(), insertadvertBean.getAdvertPicUrl(), insertadvertBean.getAdvertTime(), context);
+//                    ShowWindowAdvertUtils.show();
                 }
             }
         }
