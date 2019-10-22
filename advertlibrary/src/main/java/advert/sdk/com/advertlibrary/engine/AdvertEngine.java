@@ -22,6 +22,7 @@ public class AdvertEngine {
 
     protected DisplayManager mDisplayManager;   //使用DisplayManagerAPI可以获得当前连接的所有显示屏的枚举
     protected Presentation mPresentationMain;
+
     /**
      * 初始化广告程序,在程序启动时候调用
      *
@@ -48,7 +49,6 @@ public class AdvertEngine {
         SPUtils.put(context, "HomeHitCount", 0);
 
 
-
     }
 
     /**
@@ -63,8 +63,6 @@ public class AdvertEngine {
         context.unregisterReceiver(adverBroadCast);
         context.unregisterReceiver(new HomeWatcherReceiver());
     }
-
-
 
 
 }

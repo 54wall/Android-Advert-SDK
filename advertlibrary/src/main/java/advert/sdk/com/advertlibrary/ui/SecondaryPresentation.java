@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Button;
 import android.widget.ImageView;
-
 
 import java.io.IOException;
 
@@ -27,6 +25,7 @@ public class SecondaryPresentation extends Presentation {
     private MediaPlayer mediaPlayer;
     private int postion = 0;
     private Context context;
+
     public SecondaryPresentation(Context context, Display display) {
         super(context, display);
         this.context = context;
@@ -57,6 +56,25 @@ public class SecondaryPresentation extends Presentation {
         surfaceview.getHolder().setKeepScreenOn(true);
         surfaceview.getHolder().addCallback(new SurfaceViewLis());
 //        btnGo.setOnClickListener(this);
+    }
+
+    public void play() throws IllegalArgumentException, SecurityException,
+            IllegalStateException, IOException {
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        AssetFileDescriptor fd = context.getAssets().openFd("start.mp4");
+        mediaPlayer.setDataSource(fd.getFileDescriptor(), fd.getStartOffset(),
+                fd.getLength());
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setDisplay(surfaceview.getHolder());
+        // 通过异步的方式装载媒体资源
+        mediaPlayer.prepareAsync();
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                // 装载完毕回调
+                mediaPlayer.start();
+            }
+        });
     }
 
     private class SurfaceViewLis implements SurfaceHolder.Callback {
@@ -93,25 +111,6 @@ public class SecondaryPresentation extends Presentation {
 
         }
 
-    }
-
-    public void play() throws IllegalArgumentException, SecurityException,
-            IllegalStateException, IOException {
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        AssetFileDescriptor fd = context.getAssets().openFd("start.mp4");
-        mediaPlayer.setDataSource(fd.getFileDescriptor(), fd.getStartOffset(),
-                fd.getLength());
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setDisplay(surfaceview.getHolder());
-        // 通过异步的方式装载媒体资源
-        mediaPlayer.prepareAsync();
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                // 装载完毕回调
-                mediaPlayer.start();
-            }
-        });
     }
 
 

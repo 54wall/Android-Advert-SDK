@@ -35,4 +35,13 @@
         android:textColor="@android:color/background_dark"
         android:textSize="50sp" />
 
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="119dp" />
+
 </RelativeLayout>

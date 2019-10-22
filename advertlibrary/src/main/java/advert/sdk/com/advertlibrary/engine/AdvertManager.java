@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,6 +22,7 @@ import advert.sdk.com.advertlibrary.bean.AdvertBean;
 import advert.sdk.com.advertlibrary.constant.AdvertConstant;
 import advert.sdk.com.advertlibrary.intf.OnGetBitmapByurlListener;
 import advert.sdk.com.advertlibrary.ui.SecondaryPresentation;
+import advert.sdk.com.advertlibrary.ui.loopview.SecondaryPresentationLoopView;
 import advert.sdk.com.advertlibrary.utils.DownloadUtils;
 import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
 
@@ -31,17 +31,16 @@ import advert.sdk.com.advertlibrary.utils.ShowWindowAdvertUtils;
  */
 
 public class AdvertManager {
-    private String TAG = AdvertManager.class.getSimpleName();
     private final Context context;
     private final List<AdvertBean> advertBeanList;
+    protected DisplayManager mDisplayManager;   //使用DisplayManagerAPI可以获得当前连接的所有显示屏的枚举
+    protected SecondaryPresentationLoopView mPresentationMain;
     int index;
     int indexMax;
     Handler handler = new Handler();
+    private String TAG = AdvertManager.class.getSimpleName();
     //每隔两分钟显示一个
     private int TIME = 10000;
-    protected DisplayManager mDisplayManager;   //使用DisplayManagerAPI可以获得当前连接的所有显示屏的枚举
-    protected SecondaryPresentation mPresentationMain;
-
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -54,6 +53,7 @@ public class AdvertManager {
             handler.postDelayed(this, TIME);
         }
     };
+
     public AdvertManager(List<AdvertBean> advertBeanList, Context context) {
         this.context = context;
         this.advertBeanList = advertBeanList;
@@ -83,7 +83,7 @@ public class AdvertManager {
         // Show a new presentation if needed.
         if (mPresentationMain == null && presentationDisplay != null) {
             Log.i(TAG, "Showing presentation on display: " + presentationDisplay);
-            mPresentationMain = new SecondaryPresentation(context, presentationDisplay);
+            mPresentationMain = new SecondaryPresentationLoopView(context, presentationDisplay);
             //  mPresentation.setOnDismissListener(mOnDismissListener);
             mPresentationMain.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 
@@ -104,15 +104,15 @@ public class AdvertManager {
         switch (advertType) {
             //插入广告
             case AdvertConstant.INSERT_ADVERT_TYPE:
-                Log.e(TAG,"showAdvertManager 插入广告");
+                Log.e(TAG, "showAdvertManager 插入广告");
                 //横幅广告
             case AdvertConstant.BANNER_ADVERT_TYPE:
-                Log.e(TAG,"showAdvertManager 横幅广告");
+                Log.e(TAG, "showAdvertManager 横幅广告");
                 //这两种广告都采用dialog方式
                 //类型是TYPE_TOAST，像一个普通的Android Toast一样。这样就不需要申请悬浮窗权限了。
                 //初始化后不首先获得窗口焦点。不妨碍设备上其他部件的点击、触摸事件。
-                ShowWindowAdvertUtils.init(mPresentationMain,advertType, advertBean.getBannerLocation(), advertBean.getAdvertApkDownloadUrl(), advertBean.getAdvertPicUrl(), advertBean.getAdvertTime(), context);
-                ShowWindowAdvertUtils.show();
+                ShowWindowAdvertUtils.initLoopView(mPresentationMain, advertType, advertBean.getBannerLocation(), advertBean.getAdvertApkDownloadUrl(), advertBean.getAdvertPicUrl(), advertBean.getAdvertTime(), context);
+                ShowWindowAdvertUtils.showLoopView();
                 //定时打开
             /*    new Handler().postDelayed(new Runnable() {
                     @Override
@@ -121,7 +121,7 @@ public class AdvertManager {
                 }, advertBean.getAdvertTime());*/
                 break;
             case AdvertConstant.BAR_ADVERT_TYPE:
-                Log.e(TAG,"标题栏广告");
+                Log.e(TAG, "标题栏广告");
                 //标题栏广告,采用notification
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -136,7 +136,7 @@ public class AdvertManager {
 
     //弹出通知栏显示广告
     private void showNotificationAlert(final AdvertBean advertBean) {
-        Log.e(TAG,"弹出通知栏显示广告 showNotificationAlert()");
+        Log.e(TAG, "弹出通知栏显示广告 showNotificationAlert()");
         //将图片链接转换为bitmap对象
         DownloadUtils.getBitmapByPIcUrl(advertBean.getAdvertPicUrl(), new OnGetBitmapByurlListener() {
             @Override

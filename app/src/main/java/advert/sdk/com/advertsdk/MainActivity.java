@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestPermissions(MainActivity.this);
+        /**
+         * Caused by: android.view.WindowManager$BadTokenException: Unable to add window android.view.ViewRootImpl$W@ce21602 -- permission denied for window type 2003
+         */
         //允许出现在其他应用上 https://blog.csdn.net/u014203484/article/details/78233980
 //        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
 //        intent.setData(Uri.parse("package:" + getPackageName()));
